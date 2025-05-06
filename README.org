@@ -1,0 +1,61 @@
+* Himalaya Menu Emacs
+
+(Transient) menus for the [[https://github.com/dantecatalfamo/himalaya-emacs][Emacs front-end]] for the email client [[https://github.com/pimalaya/himalaya][Himalaya CLI]].
+
+** Preview
+
+[[./preview.png]]
+
+** Installation
+
+It's not yet on MELPA.
+
+You can install it using =use-package=.
+
+1. Clone the repository using Git to your desired location.
+   In this example I'll use
+   =~/src/github.com/jesse-c/himalay-menu-emacs=.
+2. Add the following =use-package= declaration to your =init.el=
+#+begin_src emacs-lisp
+(use-package himalaya
+  :after himalaya
+  :if (file-exists-p "~/src/github.com/jesse-c/himalaya-menu-emacs")
+  :load-path "~/src/github.com/jesse-c/himalaya-menu-emacs")
+#+end_src
+
+This will load =himalay-menu-emacs= when it's available, but stop it
+from throwing errors if you haven't cloned it.
+
+Alternatively, you can use =use-package='s VC support, whether the built-in =use-package= or not.
+
+For the built-in, you can use:
+
+#+begin_src emacs-lisp
+(use-package himalaya-menu
+  :after himalaya
+  :vc (:url "https://github.com/jesse-c/himalaya-menu-emacs" :branch "main")
+#+end_src
+
+** Setup
+
+You can configure your own bindings, for the different modes and menus:
+
+#+begin_src emacs-lisp
+  (define-key himalaya-list-envelopes-mode-map (kbd "?") #'himalaya-list-envelopes-transient-menu)
+  (define-key himalaya-read-message-mode-map (kbd "?") #'himalaya-read-message-transient-menu)
+  (define-key himalaya-read-message-raw-mode-map (kbd "?") #'himalaya-read-message-raw-transient-menu))
+#+end_src
+
+Or use the built-in setup function that does exactly that:
+
+#+begin_src emacs-lisp
+(use-package himalaya-menu
+  :after himalaya
+  :vc (:url "https://github.com/jesse-c/himalaya-menu-emacs" :branch "main")
+  :config
+  (himalaya-menu-setup))
+#+end_src
+
+** Credits
+
+Special thanks to [[https://github.com/dantecatalfamo][@dantecatalfamo]] and [[https://github.com/soywod][@soywood]] for Himalaya Emacs and [[https://github.com/soywod][@soywood]] for Himalaya itself.
